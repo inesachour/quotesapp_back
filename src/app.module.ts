@@ -9,7 +9,7 @@ import { CategoryModule } from './category/category.module';
   imports: [
     QuoteModule,
     MongooseModule.forRoot(
-      'mongodb+srv://admin:yhnlpbZWoBMGErjA@cluster0.gbprk.mongodb.net/quotesdb?retryWrites=true&w=majority',
+      'mongodb+srv://admin:??@cluster0.gbprk.mongodb.net/quotesdb?retryWrites=true&w=majority',
     ),
     CategoryModule,
   ],
