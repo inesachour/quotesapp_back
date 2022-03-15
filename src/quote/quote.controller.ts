@@ -22,14 +22,14 @@ export class QuoteController {
     return newQuote;
   }
 
-  @Get()
-  async findAll() {
-    const quotes = await this.quoteService.getQuotes();
+  @Get(':category')
+  async findAllWithCategory(@Param('category') category: string) {
+    const quotes = await this.quoteService.getQuotes(category);
     return quotes;
   }
 
-  @Get(':id')
-  async indOne(@Param('id') id: string) {
+  @Get('detail/:id')
+  async findOne(@Param('id') id: string) {
     const quote = await this.quoteService.getQuoteById(id);
     return quote;
   }

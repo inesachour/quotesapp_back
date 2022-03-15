@@ -15,17 +15,19 @@ export class QuoteService {
     const newQuote = new this.quoteModel({
       quote: createQuoteDto.quote,
       person: createQuoteDto.person,
+      category: createQuoteDto.category,
     });
     const result = await newQuote.save();
     return result.id;
   }
 
-  async getQuotes() {
-    const quotes = await this.quoteModel.find();
+  async getQuotes(category: string) {
+    const quotes = await this.quoteModel.find({ category: category });
     return quotes.map((quote) => ({
       id: quote.id,
       quote: quote.quote,
       person: quote.person,
+      category: quote.category,
     }));
   }
 
@@ -45,13 +47,16 @@ export class QuoteService {
     if (updateQuoteDto.person) {
       quote.person = updateQuoteDto.person;
     }
+    if (updateQuoteDto.category) {
+      quote.category = updateQuoteDto.category;
+    }
     quote.save();
     return quote;
   }
 
   async deleteQuote(id: string) {
     const result = await this.quoteModel.deleteOne({ _id: id });
-    if (result.deletedCount === 0){
+    if (result.deletedCount === 0) {
       throw new NotFoundException('Quote Not Found');
     }
   }
