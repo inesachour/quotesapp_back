@@ -4,6 +4,7 @@ import { UpdateQuoteDto } from './dto/update-quote.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Quote } from './quote.model';
+import { QuoteCategoryEnum } from './enums/quote-category.enum';
 
 @Injectable()
 export class QuoteService {
@@ -60,4 +61,19 @@ export class QuoteService {
       throw new NotFoundException('Quote Not Found');
     }
   }
+
+  getAllCategories() {
+    const categories = Array<Category>();
+    Object.values(QuoteCategoryEnum).forEach((value) => {
+      if (isNaN(parseInt(value.toString()))) {
+        const c = new Category(value.toString());
+        categories.push(c);
+      }
+    });
+    return categories;
+  }
+}
+
+class Category {
+  constructor(public name: string) {}
 }

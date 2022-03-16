@@ -1,5 +1,9 @@
 export enum QuoteCategoryEnum {
-  'family' = 'family',
-  'friends' = 'friends',
-  'life' = 'life',
+  'family',
+  'friends',
+  'life',
+  'happiness',
+  'work',
+  'workout',
+  'stress',
 }
