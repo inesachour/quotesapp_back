@@ -4,7 +4,16 @@ import { UpdateQuoteDto } from './dto/update-quote.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Quote } from './quote.model';
-import { QuoteCategoryEnum } from './enums/quote-category.enum';
+
+class Category {
+  constructor(public name: string, public image: string, public icon: string) {}
+}
+
+const QuoteCategories = [
+  new Category('family', 'https://wallpaper.dog/large/10752448.jpg', '0xf733'),
+  new Category('friends', 'https://wallpaperaccess.com/full/6102266.jpg', '0xf7c8'),
+  new Category('life', 'https://wallpaperbat.com/img/175937-nature-country-fence-road-view-iphone-8-wallpaper-country.jpg', '0xf0005'),
+];
 
 @Injectable()
 export class QuoteService {
@@ -63,6 +72,12 @@ export class QuoteService {
   }
 
   getAllCategories() {
+    const categories = QuoteCategories;
+    console.log(categories);
+    return categories;
+  }
+}
+/* getAllCategories() {
     const categories = Array<Category>();
     Object.values(QuoteCategoryEnum).forEach((value) => {
       if (isNaN(parseInt(value.toString()))) {
@@ -74,6 +89,6 @@ export class QuoteService {
   }
 }
 
-class Category {
+export class Category {
   constructor(public name: string) {}
-}
+}*/
