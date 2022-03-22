@@ -21,16 +21,19 @@ export class QuoteController {
     return newQuote;
   }
 
-  @Get('categories')
-  getAllCategories() {
-    const categories = this.quoteService.getAllCategories();
+  @Get('categories/:search?')
+  getAllCategories(@Param('search') search: string): any {
+    const categories = this.quoteService.getAllCategories(search);
     console.log(categories);
     return categories;
   }
 
-  @Get(':category')
-  async findAllWithCategory(@Param('category') category: string) {
-    const quotes = await this.quoteService.getQuotes(category);
+  @Get(':category/:search?')
+  async findAllWithCategory(
+    @Param('category') category: string,
+    @Param('search') search: string,
+  ) {
+    const quotes = await this.quoteService.getQuotes(category, search);
     return quotes;
   }
 

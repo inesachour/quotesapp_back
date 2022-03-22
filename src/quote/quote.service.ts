@@ -9,10 +9,18 @@ class Category {
   constructor(public name: string, public image: string, public icon: string) {}
 }
 
-const QuoteCategories = [
+export const QuoteCategories = [
   new Category('family', 'https://wallpaper.dog/large/10752448.jpg', '0xf733'),
-  new Category('friends', 'https://wallpaperaccess.com/full/6102266.jpg', '0xf7c8'),
-  new Category('life', 'https://wallpaperbat.com/img/175937-nature-country-fence-road-view-iphone-8-wallpaper-country.jpg', '0xf0005'),
+  new Category(
+    'friends',
+    'https://wallpaperaccess.com/full/6102266.jpg',
+    '0xf7c8',
+  ),
+  new Category(
+    'life',
+    'https://wallpaperbat.com/img/175937-nature-country-fence-road-view-iphone-8-wallpaper-country.jpg',
+    '0xf0005',
+  ),
 ];
 
 @Injectable()
@@ -31,14 +39,30 @@ export class QuoteService {
     return result.id;
   }
 
-  async getQuotes(category: string) {
+  async getQuotes(category: string, search: string) {
     const quotes = await this.quoteModel.find({ category: category });
-    return quotes.map((quote) => ({
+    let quoteswithsearch = [];
+    if (search != '' && search != undefined) {
+      quotes.forEach((quote) => {
+        if (quote.quote.toLowerCase().includes(search.toLowerCase())) {
+          quoteswithsearch.push({
+            id: quote.id,
+            quote: quote.quote,
+            person: quote.person,
+            category: quote.category,
+          });
+        }
+      });
+    } else {
+      quoteswithsearch = quotes;
+    }
+    return quoteswithsearch;
+    /*return quotes.map((quote) => ({
       id: quote.id,
       quote: quote.quote,
       person: quote.person,
       category: quote.category,
-    }));
+    }));*/
   }
 
   async getQuoteById(id: string) {
@@ -71,9 +95,18 @@ export class QuoteService {
     }
   }
 
-  getAllCategories() {
-    const categories = QuoteCategories;
-    console.log(categories);
+  getAllCategories(search: string) {
+    let categories = [];
+    if (search != '' && search != undefined) {
+      QuoteCategories.forEach((value, index) => {
+        if (value.name.toLowerCase().includes(search.toLowerCase())) {
+          categories.push(QuoteCategories[index]);
+        }
+      });
+    } else {
+      categories = QuoteCategories;
+    }
+
     return categories;
   }
 }
