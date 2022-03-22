@@ -23,7 +23,6 @@ export class QuoteController {
 
   @Get('categories/:search?')
   getAllCategories(@Param('search') search: string): any {
-    console.log('ok3');
     const categories = this.quoteService.getAllCategories(search);
     return categories;
   }

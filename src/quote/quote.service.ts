@@ -66,7 +66,6 @@ export class QuoteService {
   }
 
   async getQuoteById(id: string) {
-    console.log(id);
     const quote = await this.quoteModel.findById(id);
     if (!quote) {
       throw new NotFoundException('Quote Not Found');
