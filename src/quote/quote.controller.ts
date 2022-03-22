@@ -23,9 +23,15 @@ export class QuoteController {
 
   @Get('categories/:search?')
   getAllCategories(@Param('search') search: string): any {
+    console.log('ok3');
     const categories = this.quoteService.getAllCategories(search);
-    console.log(categories);
     return categories;
+  }
+
+  @Get('detail/:id')
+  async findOne(@Param('id') id: string) {
+    const quote = await this.quoteService.getQuoteById(id);
+    return quote;
   }
 
   @Get(':category/:search?')
@@ -35,12 +41,6 @@ export class QuoteController {
   ) {
     const quotes = await this.quoteService.getQuotes(category, search);
     return quotes;
-  }
-
-  @Get('detail/:id')
-  async findOne(@Param('id') id: string) {
-    const quote = await this.quoteService.getQuoteById(id);
-    return quote;
   }
 
   @Put(':id')

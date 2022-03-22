@@ -3,6 +3,5 @@
 export class CreateQuoteDto {
   quote: string;
   person: string;
-  //category: QuoteCategoryEnum;
   category: string;
 }
